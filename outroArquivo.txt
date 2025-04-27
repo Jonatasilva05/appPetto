@@ -1,3 +1,13 @@
+-- VAI EM _loyout.txt
+<Tabs.Screen
+        name="two"
+        options={{
+          title: 'two',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+    }}
+/>
+
+-- VAI DENTRO DO AQUIVO CHAMADO two.tsx QUE SE ENCONTRA DENTRO DA PASTA app->(tabs)
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';

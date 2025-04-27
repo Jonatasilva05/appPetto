@@ -53,6 +53,22 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen
+          name="conta"
+          options={{
+            presentation: 'modal',
+            headerStyle: {
+              backgroundColor: '#4A90E2',
+              
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+              fontWeight: 'bold',
+              color: 'white',
+            },
+            headerTintColor: 'white', 
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

@@ -3,12 +3,11 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 
-export default function TabOneScreen() {
+export default function TabFourScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={ styles.container }>
+      <Text style={ styles.titleH1 }> BEM-VINDO Á PETTO </Text>
+      <Text> A Petto oferece uma gama de serviços que garantem o bem-estar do seu animal de estimação, desde passeios com cães até vacinação e consultoria de saúde. Nosso objetivo é cuidar do seu pet com amor e dedicação. </Text>
     </View>
   );
 }
@@ -16,16 +15,9 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  titleH1: {
+    fontSize: 30,
+    fontWeight: "600",
   },
 });

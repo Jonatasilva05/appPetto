@@ -1,0 +1,67 @@
+# Se deseja saber sobre a funcionalidade de cada página aqui está a documentação delas
+
+## Vou descrever sobre as seguintes telas e suas funcionalidades:
+
+app
+ |- _layout.tsx
+ |- +html.tsx
+ |- +not-found.tsx
+ |- conta.tsx
+ |- modal.tsx
+ |
+ |---(tabs)
+        |- _layout.tsx
+        |- config.tsx
+        |- contato.tsx
+        |- index.tsx
+        |- login.tsx
+        |- vacinacao.tsx
+
+### Pagina _layout.tsx(app):
+
+Na página _layout.tsx encontramos as configurações globais do app como importações, barra de navegação e assim por diante...
+
+
+### Pagina +html.tsx(app):
+
+Na página +html.tsx encontramos as configurações do html como caracteres especiais, linguagem para PT-BR, importações para o html, etc...
+
+
+### Pagina conta.tsx(app):
+
+Na página conta.tsx temos o modal da pagina configurações onde ficara informações da conta do usuario e se for de seu desejo editar
+
+
+### Pagina modal.tsx(app):
+
+Na página modal.tsx temos o modal da pagina index
+
+
+### Pagina _layout.tsx(tabs):
+
+Na página _layout.tsx encontramos as configurações globais das paginas que estão dentro da pasta tabs, ou seja, importações, barra de navegação e assim por diante...
+
+### Pagina config.tsx(tabs):
+
+Na página config.tsx configurações do app assim como o usuario desejar deixar visualmente, nome, foto, redefinição de senha, informações da conta, etc...
+
+
+### Pagina contato.tsx(tabs):
+
+Na página contato.tsx temos informações para entrar em contato com o veterinario, assistente, entre outros....
+
+
+
+### Pagina index.tsx(tabs):
+
+Na página index.tsx temos a pagina inicial do app
+
+
+### Pagina login.tsx(tabs):
+
+Na página login.tsx temos a tela de login para o usuario efetuar a autenticação da sua conta e assim ter seus dados e do seu animal
+
+
+### Pagina vacinacao.tsx(tabs):
+
+Na página vacinacao.tsx temos o calendario para saber a proxima vacinacao do seu pet, e tambem a carteira para saber quais estao desatualizadas, quais foram tomadas, quais as proximas, idade, numeração, foto, e assim por diante....
