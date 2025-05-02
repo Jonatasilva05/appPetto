@@ -1,13 +1,16 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import { StyleSheet, Image } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import LottieView from 'lottie-react-native';
 
 export default function TabFourScreen() {
   return (
-    <View style={ styles.container }>
-      <Text style={ styles.titleH1 }> BEM-VINDO Á PETTO </Text>
-      <Text> A Petto oferece uma gama de serviços que garantem o bem-estar do seu animal de estimação, desde passeios com cães até vacinação e consultoria de saúde. Nosso objetivo é cuidar do seu pet com amor e dedicação. </Text>
+    <View style={styles.container}>
+      <LottieView
+        source={require('@/assets/img/json/bemvindo.json')}
+        autoPlay
+        loop
+        style={styles.animation}
+      />
     </View>
   );
 }
@@ -15,9 +18,11 @@ export default function TabFourScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  titleH1: {
-    fontSize: 30,
-    fontWeight: "600",
+  animation: {
+    width: 200,
+    height: 200,
   },
 });
