@@ -1,0 +1,2 @@
+para instalar segundo a versão do expo execute:
+npm expo install expo-video --legacy-peer-deps
