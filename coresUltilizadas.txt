@@ -1,0 +1,8 @@
+login.tsx
+    |-> COR DO TEXTO DO BOTÃO: #FFF8DC
+    |-> COR DE FUNDO INPUT: #DEB887
+    |-> COR DO PLACEHOLDER: #8B4513    
+    |-> COR DO BOTÃO: #8B0000
+    |-> COR DO TEXTO: #7B68EE    
+    |-> COR DE FUNDO: #CD853F
+    |-> COR DE "NÃO TENHO CADASTRO" #193ffd

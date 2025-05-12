@@ -1,5 +1,6 @@
 ## Para poder ultilizar as os icones foi necessária fazer a 
 ###instalação de uma extensão/pacote
+
 executando o seguinte comando dentro da pasta que estão os arquivos do app
 
 - npm install expo-image

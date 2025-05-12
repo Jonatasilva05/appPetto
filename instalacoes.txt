@@ -1,2 +1,5 @@
-para instalar segundo a versão do expo execute:
+## QUANDO HOUVER ERRO NA INSTALAÇÃO DOS PACOTES, COLOQUE O COMANDO PARA QUE ELE BAIXE E INSTALE AS VERSÕES CONFORME A ATUALIZAÇÃO DO EXPO:
+
+#### EXECUTE
+
 npm expo install expo-video --legacy-peer-deps
