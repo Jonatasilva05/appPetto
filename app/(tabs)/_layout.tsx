@@ -130,28 +130,41 @@ export default function TabLayout() {
                </Pressable>
              </Link>
            ),
-        }}/>
+        }}
+      />
 
       <Tabs.Screen
         name="vacinacao"
         options={{
           title: ' Vacinação ',
           tabBarIcon: () => <MaterialCommunityIcons name="needle" size={ 30 } color="purple" />,
-        }}/>
+        }}
+      />
 
       <Tabs.Screen
         name="contato"
         options={{
           title: ' Contato ',
           tabBarIcon: () => <Foundation name="telephone" size={ 30 } color="black" />,
-        }}/>
+        }}
+      />
 
       <Tabs.Screen
         name="login"
         options={{
           title: ' Login ',
           tabBarIcon: () => <Entypo name="login" size={ 30 } color="green" />,
-        }}/>
+          headerStyle: {
+            backgroundColor: '#8B4513',  
+          },
+          headerTitleStyle: {
+            fontSize: 22,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerTintColor: 'white', 
+        }}
+      />
 
       <Tabs.Screen
         name="config"

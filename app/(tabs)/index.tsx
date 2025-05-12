@@ -1,39 +1,77 @@
-import { StyleSheet, Image, TextInput, TouchableOpacity, Text } from 'react-native';
-import { View } from '@/components/Themed';
-import React, { useState } from 'react';
+import { StyleSheet, Animated, Dimensions, ScrollView } from 'react-native';
+import { Text, View } from '@/components/Themed';
+import { useRef } from 'react';
+import LottieView from 'lottie-react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Ionicons } from '@expo/vector-icons';  // Biblioteca de ícones (se não estiver usando, instale com: expo install @expo/vector-icons)
+const { height: screenHeight } = Dimensions.get('window');
 
+export default function TabFourScreen() {
+  const scrollY = useRef(new Animated.Value(0)).current;
 
-export default function TabThreeScreen() {
+  // Efeito parallax para o fundo
+  const translateY = scrollY.interpolate({
+    inputRange: [0, screenHeight],
+    outputRange: [0, -100], // quanto a imagem de fundo se move
+    extrapolate: 'clamp',
+  });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  // Interpolação para animar a opacidade da animação Lottie
+  const animationOpacity = scrollY.interpolate({
+    inputRange: [0, screenHeight * 0.5],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  // A animação de parallax e a animação Lottie vão "sumir" quando o conteúdo aparecer
+  const lottieTranslateY = scrollY.interpolate({
+    inputRange: [0, screenHeight],
+    outputRange: [0, -200], // Move a animação para cima à medida que o usuário rola
+    extrapolate: 'clamp',
+  });
+
   return (
-    <View style={ styles.container }>
-      <Image style={ styles.imageLogin } source={require('@/assets/images/login/iconeLogin.png')} />
-      <Text style={ styles.titleLogin }> Login </Text>
-      <Text style={ styles.textEmail }> Email </Text>
-      <TextInput style={ styles.colorInput } placeholder='Digite seu Email...' placeholderTextColor="#8B4513" />
+    <View style={styles.container}>
+      {/* Imagem de fundo com efeito parallax */}
+      <Animated.Image
+        source={{ uri: 'https://blog.emania.com.br/wp-content/uploads/2016/07/25894.jpg' }}
+        style={[styles.backgroundImage, { transform: [{ translateY }] }]}
+        resizeMode="cover"
+      />
 
-      <Text style={ styles.textSenha }> Senha </Text>
-        <TextInput style={styles.textInput} placeholder="Digite sua Senha..." placeholderTextColor="#b3b3b3" secureTextEntry={!showPassword} />
-            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
-              <Ionicons
-                name={showPassword ? 'eye-off' : 'eye'} 
-                size={24}
-                color="black"
-              />
-            </TouchableOpacity>
+      <Animated.ScrollView
+        style={StyleSheet.absoluteFill}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+      >
+        <View style={styles.content}>
+          <Text style={styles.title}>Parallax com Animação Lottie</Text>
+          <Text style={styles.description}>
+            Ao rolar, o fundo se move mais devagar que o conteúdo, e a animação Lottie começa ao rolar.
+            Ela desaparece conforme o conteúdo aparece e reaparece com a imagem.
+          </Text>
+        </View>
+      </Animated.ScrollView>
 
-      <Text style={ styles.cadastroText }> Não tenho cadastro?  </Text>
-
-      <TouchableOpacity style={ styles.customButton }>
-        <Text style={ styles.buttonText }> Entrar </Text>
-      </TouchableOpacity>
+      {/* Animação Lottie com opacidade e movimento controlado pela rolagem */}
+      <Animated.View
+        style={[
+          styles.animationContainer,
+          {
+            opacity: animationOpacity,
+            transform: [{ translateY: lottieTranslateY }],
+          },
+        ]}
+      >
+        <LottieView
+          source={require('@/assets/images/json/dog.json')}
+          autoPlay
+          loop
+          style={styles.animation}
+        />
+      </Animated.View>
     </View>
   );
 }
@@ -41,204 +79,41 @@ export default function TabThreeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: -150,
-    backgroundColor: '#CD853F',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#000',
+    position: 'relative',
   },
-  imageLogin: {
-    height: 250,
-    width: 250,
+  backgroundImage: {
+    height: screenHeight * 1.1,
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
-  titleLogin: {
-    fontWeight: '800',
-    color: '#7B68EE',
-    fontSize: 45,
+  content: {
+    marginTop: screenHeight,
+    padding: 24,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    minHeight: screenHeight,
   },
-  textEmail: {
-    alignSelf: 'flex-start',
-    fontWeight: '300',
-    marginLeft: 45,
-    fontSize: 30,
-    width: '80%',
-  },
-  textSenha: {
-    alignSelf: 'flex-start',
-    fontWeight: '300',
-    marginLeft: 45,
-    paddingTop: 25,
-    fontSize: 30,
-    width: '80%',
-  },
-  colorInput: {
-    backgroundColor: '#DEB887',
-    borderRadius: 15,
-    marginBottom: 15,
-    marginTop: 15,
-    fontSize: 20,
-    width: '80%',
-    padding: 10,
-    height: 60,
-  },
-  customButton: {
-    backgroundColor: '#8B0000',
-    paddingHorizontal: 165,
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 25,
-  },
-  cadastroText: {
-    fontSize: 18,
-    color: '#193ffd',
-    margin: 0,
-  },
-  buttonText: {
-    textAlign: 'center',
+  title: {
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFF8DC',
-    fontSize: 20,
+    marginBottom: 12,
   },
-  textInput: {
-    backgroundColor: 'white',
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    borderColor: 'black',
-    width: '60%',
-    borderWidth: 2,
+  description: {
+    fontSize: 18,
+    lineHeight: 26,
   },
-  iconContainer: {
-    position: 'absolute', 
-    right: 10, 
+  animationContainer: {
+    position: 'absolute',
+    top: screenHeight * 0.3,
+    left: '20%',
+    transform: [{ translateX: -150 }],
+  },
+  animation: {
+    width: 300,
+    height: 300,
   },
 });
-
-
-
-
-
-// const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
-
-//   const togglePasswordVisibility = () => {
-//     setShowPassword(!showPassword); // Alterna a visibilidade da senha
-//   };
-//             <TextInput
-//               style={style.textInput} placeholder="Digite sua Senha..." placeholderTextColor="#b3b3b3" secureTextEntry={!showPassword} />
-//             <TouchableOpacity onPress={togglePasswordVisibility} style={style.iconContainer}>
-//               <Ionicons
-//                 name={showPassword ? 'eye-off' : 'eye'} 
-//                 size={24}
-//                 color="black"
-//               />
-//             </TouchableOpacity>
-
-
-
-
-
-// ANIMAÇAÕ DO INPUT TEXT
-// import React, { useRef, useState } from 'react';
-// import { StyleSheet, Image, TextInput, TouchableOpacity, Text, Animated, View } from 'react-native';
-
-// export default function TabThreeScreen() {
-//   const emailAnim = useRef(new Animated.Value(0)).current;
-//   const senhaAnim = useRef(new Animated.Value(0)).current;
-
-//   const handleFocus = (anim) => {
-//     Animated.spring(anim, {
-//       toValue: -10,
-//       useNativeDriver: true,
-//     }).start();
-//   };
-
-//   const handleBlur = (anim) => {
-//     Animated.spring(anim, {
-//       toValue: 0,
-//       useNativeDriver: true,
-//     }).start();
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Image style={styles.imageLogin} source={require('@/assets/images/login/iconeLogin.png')} />
-//       <Text style={styles.titleLogin}> Login </Text>
-
-//       <Text style={styles.textEmail}> Email </Text>
-//       <Animated.View style={{ transform: [{ translateY: emailAnim }] }}>
-//         <TextInput
-//           style={styles.colorInput}
-//           placeholder="Digite seu Email..."
-//           placeholderTextColor="#8B4513"
-//           onFocus={() => handleFocus(emailAnim)}
-//           onBlur={() => handleBlur(emailAnim)}
-//         />
-//       </Animated.View>
-
-//       <Text style={styles.textSenha}> Senha </Text>
-//       <Animated.View style={{ transform: [{ translateY: senhaAnim }] }}>
-//         <TextInput
-//           style={styles.colorInput}
-//           placeholder="Digite sua Senha..."
-//           placeholderTextColor="#8B4513"
-//           secureTextEntry
-//           onFocus={() => handleFocus(senhaAnim)}
-//           onBlur={() => handleBlur(senhaAnim)}
-//         />
-//       </Animated.View>
-
-//       <TouchableOpacity style={styles.customButton}>
-//         <Text style={styles.buttonText}>Entrar</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#CD853F',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   titleLogin: {
-//     color: '#7B68EE',
-//     fontWeight: '800',
-//     fontSize: 40,
-//   },
-//   imageLogin: {
-//     height: 180,
-//     width: 180,
-//   },
-//   textEmail: {
-//     alignSelf: 'flex-start',
-//     marginLeft: 45,
-//     fontWeight: '300',
-//     fontSize: 25,
-//   },
-//   textSenha: {
-//     alignSelf: 'flex-start',
-//     marginLeft: 45,
-//     fontWeight: '300',
-//     fontSize: 25,
-//     paddingTop: 25,
-//   },
-//   colorInput: {
-//     backgroundColor: '#DEB887',
-//     borderRadius: 15,
-//     width: 260,
-//     padding: 10,
-//     marginBottom: 15,
-//   },
-//   customButton: {
-//     backgroundColor: '#8B0000',
-//     paddingVertical: 12,
-//     paddingHorizontal: 50,
-//     borderRadius: 15,
-//     marginTop: 25,
-//   },
-//   buttonText: {
-//     color: '#FFF8DC',
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//   },
-// });
