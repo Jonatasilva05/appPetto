@@ -14,7 +14,7 @@ export default function TabThreeScreen() {
 
   return (
     <View style={ styles.container }>
-      <Image style={ styles.imageLogin } source={require('@/assets/images/login/iconeLogin.png')} />
+      <Image style={ styles.imageLogin } source={require('@/assets/images/login/iconLogin.png')} />
       <Text style={ styles.titleLogin }> Login </Text>
       <Text style={ styles.textEmail }> Email </Text>
       <TextInput style={ styles.colorInput } placeholder='Digite seu Email...' placeholderTextColor="#8B4513" />

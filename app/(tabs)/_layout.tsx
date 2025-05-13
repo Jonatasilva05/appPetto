@@ -1,7 +1,7 @@
 // ESTRUTURA DA PAGINA
+import { Pressable, View, Text, Dimensions, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, View, Text, Dimensions } from 'react-native';
 
 // FONTES ICONES
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -114,29 +114,43 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-           title: ' Petto ',
-           tabBarIcon: () => <FontAwesome name="home" size={ 30 } color="black" />,
-           headerRight: () => (
-             <Link href="/modal" asChild>
-               <Pressable>
-                 {({ pressed }) => (
-                   <FontAwesome
-                     name="info-circle"
-                     size={ 40 }
-                     color={Colors[colorScheme ?? 'light'].text}
-                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                   />
-                 )}
-               </Pressable>
-             </Link>
-           ),
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain" />
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Petto </Text>
+            </View>
+          ),
+
+          tabBarIcon: () => <FontAwesome name="home" size={30} color="black" />,
+          
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={40}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
         }}
       />
+
 
       <Tabs.Screen
         name="vacinacao"
         options={{
           title: ' Vacinação ',
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Vacinação </Text>
+            </View>
+          ),
           tabBarIcon: () => <MaterialCommunityIcons name="needle" size={ 30 } color="purple" />,
         }}
       />
@@ -145,6 +159,12 @@ export default function TabLayout() {
         name="contato"
         options={{
           title: ' Contato ',
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Contato </Text>
+            </View>
+          ),
           tabBarIcon: () => <Foundation name="telephone" size={ 30 } color="black" />,
         }}
       />
@@ -153,6 +173,12 @@ export default function TabLayout() {
         name="login"
         options={{
           title: ' Login ',
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Login </Text>
+            </View>
+          ),
           tabBarIcon: () => <Entypo name="login" size={ 30 } color="green" />,
           headerStyle: {
             backgroundColor: '#8B4513',  
@@ -170,6 +196,12 @@ export default function TabLayout() {
         name="config"
         options={{
           title: ' Configuração ',
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Configuração </Text>
+            </View>
+          ),
           tabBarIcon: () => <Feather name="settings" size={ 30 } color="black" />,
           headerRight: () => (
             <Link href="/conta" asChild>
