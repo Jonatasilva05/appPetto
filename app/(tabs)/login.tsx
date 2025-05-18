@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Ionicons } from '@expo/vector-icons';  // Biblioteca de ícones (se não estiver usando, instale com: expo install @expo/vector-icons)
+import { useRouter } from 'expo-router';
 
 export default function TabThreeScreen() {
 
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -28,7 +30,7 @@ export default function TabThreeScreen() {
 
 {/* 🐵🙈 */}
 
-      <Text style={ styles.cadastroText }> Não tenho cadastro?  </Text>
+      <Text style={ styles.cadastroText } onPress={() => router.push('/cadastro')}> Não tenho cadastro?  </Text>
 
       <TouchableOpacity style={ styles.customButton }>
         <Text style={ styles.buttonText }> Entrar </Text>
@@ -92,8 +94,9 @@ const styles = StyleSheet.create({
     left: 155,
   },
   cadastroText: {
-    fontSize: 18,
     color: '#193ffd',
+    fontSize: 18,
+    padding: 15,
     margin: 0,
   },
   buttonText: {

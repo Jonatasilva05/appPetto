@@ -3,3 +3,19 @@
 #### EXECUTE
 
 npm expo install expo-video --legacy-peer-deps
+
+
+## PARA ATUALIZAR O NPM
+
+### EXECUTE
+
+npm install -g npm@11.4.0
+
+
+## EXTENSÕES ULTILIZADAS
+
+#### PARA INPUT DATA
+npm install date-fns
+
+#### PARA DROPDOWN DE ESCOLHA 
+npm install @react-native-picker/picker
