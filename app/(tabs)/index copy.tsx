@@ -8,30 +8,30 @@ const { height: screenHeight } = Dimensions.get('window');
 export default function TabFourScreen() {
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  // Efeito parallax para o fundo
+  // EFEITO PARALAX PARA O FUNDO
   const translateY = scrollY.interpolate({
     inputRange: [0, screenHeight],
-    outputRange: [0, -100], // quanto a imagem de fundo se move
+    outputRange: [0, -100],
     extrapolate: 'clamp',
   });
 
-  // Interpolação para animar a opacidade da animação Lottie
+  // FAZ COM QUE A IMAGEM "DESAPAREÇA" AOS POUCOS QUANDO PUXA ARRASTA PARA CIMA
   const animationOpacity = scrollY.interpolate({
     inputRange: [0, screenHeight * 0.5],
     outputRange: [1, 0],
     extrapolate: 'clamp',
   });
 
-  // A animação de parallax e a animação Lottie vão "sumir" quando o conteúdo aparecer
+  // A ANIMAÇÃO DO "PARALAX" E "EM JSON" VÃO SUMIR QUANDO O CONTEUDO APARECER
   const lottieTranslateY = scrollY.interpolate({
     inputRange: [0, screenHeight],
-    outputRange: [0, -200], // Move a animação para cima à medida que o usuário rola
+    outputRange: [0, -200],
     extrapolate: 'clamp',
   });
 
   return (
     <View style={styles.container}>
-      {/* Imagem de fundo com efeito parallax */}
+      {/* IMAGEM QUE É ACLOPADA COM O FUNDO PARA AJUDAR NO EFEITO */}
       <Animated.Image
         source={{ uri: 'https://blog.emania.com.br/wp-content/uploads/2016/07/25894.jpg' }}
         style={[styles.backgroundImage, { transform: [{ translateY }] }]}
@@ -55,7 +55,7 @@ export default function TabFourScreen() {
         </View>
       </Animated.ScrollView>
 
-      {/* Animação Lottie com opacidade e movimento controlado pela rolagem */}
+      {/* ANIMAÇÃO EM JSON SENDO CONTROLADO SUA OPACIDADE E MOVIMENTO PELA MOVIMENTAÇÃO DA TELA */}
       <Animated.View
         style={[
           styles.animationContainer,

@@ -6,3 +6,6 @@ login.tsx
     |-> COR DO TEXTO: #7B68EE    
     |-> COR DE FUNDO: #CD853F
     |-> COR DE "NÃO TENHO CADASTRO" #193ffd
+
+
+#20a9ff

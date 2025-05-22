@@ -19,3 +19,6 @@ npm install date-fns
 
 #### PARA DROPDOWN DE ESCOLHA 
 npm install @react-native-picker/picker
+
+#### PARA LINEAR GRADIENT
+npm install react-native-linear-gradient
