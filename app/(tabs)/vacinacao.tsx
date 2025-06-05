@@ -42,7 +42,7 @@ export default function TabThreeScreen() {
           {/** 1 Coluna - Espécie */}
           <View style={styles.row}>
             <View style={styles.col1}>
-              <Image style={styles.imgBodyGene} source={require("@/assets/images/icon/genetica.png")} />
+              <Image style={styles.imgBodyGene} source={require("@/assets/images/images/cachorro.png")} />
               <Text style={styles.textLabelBody}> Espécie: </Text>
             </View>
             <View style={styles.col2}>
