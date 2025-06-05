@@ -58,7 +58,7 @@ export default function TabLayout() {
       tabBar={(props) => (
 
         //BARRA DE NAVEGAÇÃO INFERIOR
-        <View style={{ flexDirection: 'row', height: 80, backgroundColor: '#fff', position: 'relative' }}>
+        <View style={{ flexDirection: 'row', height: 80, backgroundColor: '#3b4042', position: 'relative' }}>
           <Animated.View
             style={[
               {
@@ -78,7 +78,7 @@ export default function TabLayout() {
                   width: 50,
                   height: 50,
                   borderRadius: "100%",
-                  backgroundColor: '#4A90E2',
+                  backgroundColor: 'royalblue',
                   marginBottom: 5,
                 }
               }/>
@@ -104,7 +104,7 @@ export default function TabLayout() {
                 onPress={onPress}
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                   {Icon && Icon({ focused: isFocused, color: isFocused ? '#4A90E2' : 'gray', size: 30 })}
-                  <Text style={{ color: isFocused ? '#4A90E2' : 'black' }}>{label}</Text>
+                  <Text style={{ color: isFocused ? '#4A90E2' : 'white' }}>{label}</Text>
               </Pressable>
             );
           })}
@@ -114,14 +114,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          title: ' Index ',
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain" />
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Petto </Text>
+              <Image source={require('@/assets/images/logo/iconBrancaSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain" />
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "white" }}> Petto </Text>
             </View>
           ),
 
-          tabBarIcon: () => <FontAwesome name="home" size={30} color="black" />,
+          tabBarIcon: () => <FontAwesome name="home" size={30} color="silver" />,
           
           headerRight: () => (
             <Link href="/modal" asChild>
@@ -130,7 +131,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="info-circle"
                     size={40}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={"white"}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -147,11 +148,11 @@ export default function TabLayout() {
           title: ' Vacinação ',
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Vacinação </Text>
+              <Image source={require('@/assets/images/logo/iconBrancaSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "white" }}> Vacinação </Text>
             </View>
           ),
-          tabBarIcon: () => <MaterialCommunityIcons name="needle" size={ 30 } color="purple" />,
+          tabBarIcon: () => <MaterialCommunityIcons name="needle" size={ 30 } color="violet" />,
         }}
       />
 
@@ -161,11 +162,11 @@ export default function TabLayout() {
           title: ' Contato ',
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Contato </Text>
+              <Image source={require('@/assets/images/logo/iconBrancaSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "white" }}> Contato </Text>
             </View>
           ),
-          tabBarIcon: () => <Foundation name="telephone" size={ 30 } color="black" />,
+          tabBarIcon: () => <Foundation name="telephone" size={ 30 } color="silver" />,
         }}
       />
 
@@ -175,14 +176,11 @@ export default function TabLayout() {
           title: ' Login ',
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Login </Text>
+              <Image source={require('@/assets/images/logo/iconBrancaSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "white" }}> Login </Text>
             </View>
           ),
-          tabBarIcon: () => <Entypo name="login" size={ 30 } color="green" />,
-          headerStyle: {
-            backgroundColor: '#8B4513',  
-          },
+          tabBarIcon: () => <Entypo name="login" size={ 30 } color="limegreen" />,
           headerTitleStyle: {
             fontSize: 22,
             fontWeight: 'bold',
@@ -198,11 +196,11 @@ export default function TabLayout() {
           title: ' Configuração ',
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Image source={require('@/assets/images/logo/iconSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors[colorScheme ?? 'light'].text }}> Configuração </Text>
+              <Image source={require('@/assets/images/logo/iconBrancaSemFundoSemNome.png')} style={{ width: 83, height: 90 }} resizeMode="contain"/>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "white" }}> Configuração </Text>
             </View>
           ),
-          tabBarIcon: () => <Feather name="settings" size={ 30 } color="black" />,
+          tabBarIcon: () => <Feather name="settings" size={ 30 } color="silver" />,
           headerRight: () => (
             <Link href="/conta" asChild>
               <Pressable>
@@ -210,7 +208,7 @@ export default function TabLayout() {
                   <FontAwesome5 
                     name="user-circle" 
                     size={ 40 } 
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={"white"}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

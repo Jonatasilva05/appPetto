@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 
 
-const backgroundImage = { uri: 'https://blog.emania.com.br/wp-content/uploads/2016/07/25894.jpg' } 
+const backgroundImage = require("@/assets/images/images/cenario-cachorro.jpg") 
 
 export default function Cadastro() {
   const [nome, setNome] = useState('');
@@ -203,12 +203,12 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
   },
   linkText: {
     textDecorationLine: 'underline',
     fontWeight: 'bold',
-    color: '#1565C0',
-    fontSize: 16,
+    color: 'dodgerblue',
+    fontSize: 20,
   },
 });

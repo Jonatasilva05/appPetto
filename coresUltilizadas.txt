@@ -8,4 +8,4 @@ login.tsx
     |-> COR DE "NÃO TENHO CADASTRO" #193ffd
 
 
-#20a9ff
+COR DO CABECARIO DAS PAGINAS#3b4042
