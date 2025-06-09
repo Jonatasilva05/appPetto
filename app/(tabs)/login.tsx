@@ -1,5 +1,4 @@
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
@@ -19,7 +18,7 @@ export default function Cadastro() {
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <View style={styles.overlay}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
           <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
             <View style={styles.header}>
               <Text style={styles.title}> Bem vindo ao Petto </Text>
@@ -73,8 +72,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-  flexGrow: 1,
-  paddingBottom: 80,
+    flexGrow: 1,
+    paddingBottom: 80,
   },
   header: {
     justifyContent: 'center',
