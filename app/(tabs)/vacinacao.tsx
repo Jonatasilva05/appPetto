@@ -26,7 +26,8 @@ export default function TabThreeScreen() {
 
           <View style={ styles.body }>
             <View style={ styles.imageBody }> 
-              <Image style={ styles.animation } source={require("@/assets/images/images/cachorro.png")} />
+          {/*  <Image style={ styles.animation } source={require("@/assets/images/cachorro.png")} /> */}             
+
               <Text style={ styles.nomePet }> Chocolate </Text>
             </View>
 
@@ -34,7 +35,8 @@ export default function TabThreeScreen() {
               {/** 1 Coluna - Espécie */}
               <View style={styles.row}>
                 <View style={styles.col1}>
-                  <Image style={styles.imgBodyGene} source={require("@/assets/images/icon/genetica.png")} />
+          {/*   <Image style={styles.imgBodyGene} source={require("@/assets/images/icon/genetica.png")} /> */}                
+
                   <Text style={styles.textLabelBody}> Espécie: </Text>
                 </View>
                 <View style={styles.col2}>

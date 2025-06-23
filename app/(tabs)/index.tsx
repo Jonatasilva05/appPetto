@@ -66,7 +66,7 @@ export default function TabFourScreen() {
         ]}
       >
         <LottieView
-          source={require('@/assets/images/json/dog.json')}
+          source={require('@/assets/imagess/json/dog.json')}
           autoPlay
           loop
           style={styles.animation}
