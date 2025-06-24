@@ -1,32 +1,26 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider, Theme } from '@react-navigation/native';
+import { ThemeProvider, DefaultTheme, Theme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { Image } from 'react-native';
 import 'react-native-reanimated';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import * as NavigationBar from 'expo-navigation-bar';
+import { Platform } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
-export {
-  ErrorBoundary,
-} from 'expo-router';
+export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
   initialRouteName: 'login',
 };
 
-const GrayTheme: Theme = {
+const AppTheme: Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#3b4042',
-    background: '#3b4042',
-    card: '#3b4042',
-    text: '#3b4042',
-    border: '#3b4042',
-    notification: '#3b4042',
+    background: '#274472', 
   },
 };
 
@@ -42,6 +36,12 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      
+      if (Platform.OS === 'android') {
+        NavigationBar.setVisibilityAsync("hidden");
+        // A linha abaixo foi removida para evitar o WARN
+        // NavigationBar.setBehaviorAsync('overlay-swipe'); 
+      }
     }
   }, [loaded]);
 
@@ -54,111 +54,11 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={GrayTheme}>
+    <ThemeProvider value={AppTheme}>
       <Stack>
-        <Stack.Screen name="login" options={{ headerShown: false, headerTintColor: 'white', }}/>
-
-        {/* <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true, headerTintColor: 'white',
-            // COM O HEADER TITLE O NOME NAO APARECE RESOLVER ISSO
-            headerTitle: () => (
-              <Image
-                source={require('@/assets/imagess/logo/iconBrancaSemFundoSemNome.png')}
-                style={{ width: 83, height: 80, resizeMode: 'contain' }}
-              />
-            ),
-          }}
-        /> */}
-        
-        {/* <Stack.Screen name="cadastro" options={{ headerShown: true, headerTintColor: 'white', }} /> SE CASO DESEJAR A SETA PARA "VOLTAR" */} 
-
-        {/* <Stack.Screen name="conta" options={{ presentation: 'modal', headerStyle: { backgroundColor: '#4A90E2', }, headerTitleStyle: { fontSize: 22, fontWeight: 'bold', color: 'white', }, headerTintColor: 'white', }} /> */}
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> 
       </Stack>
     </ThemeProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-
-// CASO DESEJAR VOLTAR NO MODO DARK E LIGHT
-// import FontAwesome from '@expo/vector-icons/FontAwesome';
-// import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-// import { useFonts } from 'expo-font';
-// import { Stack } from 'expo-router';
-// import * as SplashScreen from 'expo-splash-screen';
-// import { useEffect } from 'react';
-// import 'react-native-reanimated';
-
-// import { useColorScheme } from '@/components/useColorScheme';
-
-// export {
-//   // Catch any errors thrown by the Layout component.
-//   ErrorBoundary,
-// } from 'expo-router';
-
-// export const unstable_settings = {
-//   // Ensure that reloading on `/modal` keeps a back button present.
-//   initialRouteName: '(tabs)',
-// };
-
-// // Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
-
-// export default function RootLayout() {
-//   const [loaded, error] = useFonts({
-//     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-//     ...FontAwesome.font,
-//   });
-
-//   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-//   useEffect(() => {
-//     if (error) throw error;
-//   }, [error]);
-
-//   useEffect(() => {
-//     if (loaded) {
-//       SplashScreen.hideAsync();
-//     }
-//   }, [loaded]);
-
-//   if (!loaded) {
-//     return null;
-//   }
-
-//   return <RootLayoutNav />;
-// }
-
-// function RootLayoutNav() {
-//   const colorScheme = useColorScheme();
-
-//   return (
-//     <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
-//       <Stack>
-//         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-//         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-//         <Stack.Screen
-//           name="conta"
-//           options={{
-//             presentation: 'modal',
-//             headerStyle: {
-//               backgroundColor: '#4A90E2',
-              
-//             },
-//             headerTitleStyle: {
-//               fontSize: 22,
-//               fontWeight: 'bold',
-//               color: 'white',
-//             },
-//             headerTintColor: 'white', 
-//           }}
-//         />
-//       </Stack>
-//     </ThemeProvider>
-//   );
-// }
