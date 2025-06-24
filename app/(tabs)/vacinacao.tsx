@@ -1,220 +1,260 @@
-import { StyleSheet, Image, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { Text, View } from '@/components/Themed';
-import { router } from 'expo-router';
+import { StyleSheet, Animated, Dimensions, ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import Foundation from '@expo/vector-icons/Foundation';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import Entypo from '@expo/vector-icons/Entypo';
+const { height: screenHeight } = Dimensions.get('window');
 
-import LottieView from 'lottie-react-native';
+// --- Dados Fictícios (Mock Data) para a lista de vacinas ---
+const vaccineHistory = [
+  {
+    id: '1',
+    icon: 'checkmark-circle-outline',
+    title: 'Vacina Polivalente (V8)',
+    description: 'Aplicada em 15/01/2025',
+    progress: 'OK',
+    iconColor: '#28a745',
+  },
+  {
+    id: '2',
+    icon: 'shield-checkmark-outline',
+    title: 'Anti-rábica',
+    description: 'Aplicada em 20/02/2025',
+    progress: 'OK',
+    iconColor: '#007bff',
+  },
+  {
+    id: '3',
+    icon: 'notifications-outline',
+    title: 'Verme',
+    description: 'Próxima dose em 10/07/2025',
+    progress: 'Próxima',
+    iconColor: '#e74c3c',
+  },
+];
 
 
-export default function TabThreeScreen() {
+export default function ParallaxProfileScreen() {
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const bounceValue = useRef(new Animated.Value(0)).current;
+
+  // EFEITO PARALAX PARA O FUNDO
+  const backgroundTranslateY = scrollY.interpolate({
+    inputRange: [0, screenHeight],
+    outputRange: [0, screenHeight * 0.3], // Movimento mais sutil para o fundo
+    extrapolate: 'clamp',
+  });
+
+  // FAZ O INDICADOR DE ROLAGEM DESAPARECER QUANDO O USUÁRIO COMEÇA A ROLAR
+  const indicatorOpacity = scrollY.interpolate({
+      inputRange: [0, 50], // Desaparece rapidamente nos primeiros 50px de rolagem
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+  });
+
+  // ANIMAÇÃO DE "PULAR" PARA O INDICADOR DE ROLAGEM
+  useEffect(() => {
+    const bounceAnimation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bounceValue, {
+          toValue: -15,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+        Animated.timing(bounceValue, {
+          toValue: 0,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    bounceAnimation.start();
+    return () => bounceAnimation.stop();
+  }, [bounceValue]);
+
+
   return (
-        <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-          {/* "CABECARIO" */}
-          <View style={ styles.header }>
-            <View style={styles.backgroundHeader }>
-              <View style={ styles.bottomHeader }>
-                <Text style={ styles.textHeader }>Carteira de Vacinação Digital </Text>
-              </View>
+    <View style={styles.container}>
+      {/* IMAGEM DE FUNDO DO PET COM EFEITO PARALLAX */}
+      <Animated.Image
+        source={require('@/assets/imagess/images/cachorro.png')} // **COLOQUE A IMAGEM DO LABRADOR AQUI**
+        style={[styles.backgroundImage, { transform: [{ translateY: backgroundTranslateY }] }]}
+        resizeMode="cover"
+      />
+
+      {/* <Animated.Image
+        source={require('@/assets/imagess/images/cachorro.png')}
+        style={[styles.backgroundImage, { transform: [{ translateY: backgroundTranslateY }] }]}
+        resizeMode="contain" 
+      /> */}
+
+      {/* INDICADOR VISUAL PARA ROLAR A TELA */}
+      <Animated.View style={[styles.indicatorContainer, { opacity: indicatorOpacity, transform: [{ translateY: bounceValue }] }]}>
+          <Text style={styles.indicatorText}>Arraste para cima</Text>
+          <Ionicons name="chevron-up-outline" size={32} color="white" />
+      </Animated.View>
+
+      <Animated.ScrollView
+        style={StyleSheet.absoluteFill}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+      >
+        {/* CONTEÚDO DO PERFIL QUE APARECE AO ROLAR */}
+        <View style={styles.contentContainer}>
+          {/* Nome do Pet no topo */}
+          <Text style={styles.petName}>Chocolate</Text>
+
+          {/* Seção "Datos do Pet" */}
+          <View style={styles.detailsSection}>
+            <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Dados do Pet </Text>
+                <TouchableOpacity>
+                    <Ionicons name="sparkles-outline" size={20} color="#666" />
+                </TouchableOpacity>
             </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
+              <View style={styles.tag}><Text style={styles.tagText}>Espécie: Cão </Text></View>
+              <View style={styles.tag}><Text style={styles.tagText}>Raça: Labrador </Text></View>
+              <View style={styles.tag}><Text style={styles.tagText}>Idade: 3 anos </Text></View>
+            </ScrollView>
           </View>
 
-          <View style={ styles.body }>
-            <View style={ styles.imageBody }> 
-          {/*  <Image style={ styles.animation } source={require("@/assets/images/cachorro.png")} /> */}             
-
-              <Text style={ styles.nomePet }> Chocolate </Text>
+          {/* Card "Histórico de Vacinas" */}
+          <View style={styles.vaccineCard}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Histórico de Vacinas</Text>
+              <TouchableOpacity>
+                <Ionicons name="ellipsis-horizontal" size={24} color="#333" />
+              </TouchableOpacity>
             </View>
-
-            <View style={styles.dadosPet}>
-              {/** 1 Coluna - Espécie */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-          {/*   <Image style={styles.imgBodyGene} source={require("@/assets/images/icon/genetica.png")} /> */}                
-
-                  <Text style={styles.textLabelBody}> Espécie: </Text>
+            
+            {vaccineHistory.map((item) => (
+              <View key={item.id} style={styles.vaccineItem}>
+                <View style={[styles.iconContainer, { backgroundColor: item.iconColor }]}>
+                    <Ionicons name={item.icon as any} size={22} color="white" />
                 </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2} onPress={() => router.push('/(tabs)/login')}> Cachorro </Text>
+                <View style={styles.vaccineInfo}>
+                  <Text style={styles.vaccineTitle}>{item.title}</Text>
+                  <Text style={styles.vaccineDescription}>{item.description}</Text>
                 </View>
+                <Text style={styles.vaccineProgress}>{item.progress}</Text>
               </View>
-
-              {/** 2 Coluna - Raça */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-                  <Ionicons name="paw" size={30} color="black" />
-                  <Text style={styles.textLabelBody}> Raça: </Text>
-                </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2} onPress={() => router.push('/(tabs)/login')}> Golden </Text>
-                </View>
-              </View>
-              
-              {/** 3 Coluna - Idade */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-                  <FontAwesome name="heart" size={30} color="black" />
-                  <Text style={styles.textLabelBody}> Idade: </Text>
-                </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2} onPress={() => router.push('/(tabs)/login')}> 1 Ano </Text>
-                </View>
-              </View>
-
-              {/** 4 Coluna - Alergia */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-                  <FontAwesome5 name="virus" size={30} color="black" />
-                  <Text style={styles.textLabelBody}> Alergia: </Text>
-                </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2} onPress={() => router.push('/(tabs)/login')}> N/D </Text>
-                </View>
-              </View>
-
-              {/** 5 Coluna - Última Consulta */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-                  <Entypo name="calendar" size={30} color="black" />
-                  <Text style={styles.textLabelBody}> Última Consulta: </Text>
-                </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2} onPress={() => router.push('/(tabs)/login')}> N/D </Text>
-                </View>
-              </View>
-
-              {/** 6 Coluna - Telefone */}
-              <View style={styles.row}>
-                <View style={styles.col1}>
-                  <Foundation name="telephone" size={30} color="black" />
-                  <Text style={styles.textLabelBody}> Telefone para Contato: </Text>
-                </View>
-                <View style={styles.col2}>
-                  <Text style={styles.textLabelBody2}> (16) 99999-9999 </Text>
-                </View>
-              </View>
-            </View>
+            ))}
           </View>
-        </ScrollView>
+        </View>
+      </Animated.ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    
-  },
-
-  keyboardAvoiding: {
-    flex: 1,
-  },
-
   container: {
-    backgroundColor: '#193ffd',
+    flex: 1,
+    backgroundColor: '#000', // Fundo preto para o container principal
+  },
+  backgroundImage: {
+    height: screenHeight, // Ocupa a tela inteira inicialmente
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  indicatorContainer: {
+    position: 'absolute',
+    bottom: 100, // Posicionado na parte de baixo da tela
+    alignSelf: 'center',
+    alignItems: 'center',
+    zIndex: 10, // Garante que fique sobre a imagem
+  },
+  indicatorText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
+  },
+  contentContainer: {
+    marginTop: screenHeight, // Empurra o conteúdo para baixo, para fora da tela
+    padding: 20,
+    backgroundColor: '#F4F6F6', // Cor de fundo do conteúdo
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    minHeight: screenHeight, // Garante que o conteúdo preencha a tela
+  },
+  petName: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1A2E35',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  detailsSection: {
+    marginBottom: 24,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1A2E35',
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+  },
+  tag: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 15,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#DDEAEA',
+  },
+  tagText: {
+    fontSize: 14,
+    color: '#58707A',
+  },
+  vaccineCard: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 40,
+  },
+  vaccineItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 12,
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  vaccineInfo: {
     flex: 1,
   },
-  
-  header: {
-    backgroundColor: '#e31b00', // COR AMARELA DE ANTES -> backgroundColor: '#ffc320',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 150,
+  vaccineTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1A2E35',
   },
-
-  bottomHeader: {
-    backgroundColor: '#e31b00',
+  vaccineDescription: {
+    fontSize: 13,
+    color: '#58707A',
   },
-
-  imgHeader: {
-    tintColor: 'white', // PARA DEIXAR A LOGO BRANCA MAS SÓ FUNCIONA BEM COM IMGs EM FORMATO PNG
-    height: 100,
-    width: 100,
-  },
-
-  textHeader: {
-    textAlign: 'left',
-    letterSpacing: 3,
-    color: 'white',
-    fontSize: 35,
-    width: 380,
-  },
-
-  body: {
-    flex: 1/2,
-  },
-
-  imageBody: {
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 50,
-  },
-
-  backgroundHeader: {
-    backgroundColor: 'white',
-  },
-
-  animation: {
-    height: 200,
-    width: 200,
-  },
-
-  nomePet: {
-    fontSize: 35,
-  },
-
-  dadosPet: {
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    height: 400,
-  },
-
-  imgBodyGene: {
-    height: 35,
-    width: 35,
-  },
-
-  row: {
-    backgroundColor: '#eaeaea',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'black',
-    paddingVertical: 13,
-    // marginBottom: 5, PREFERIVEL
-    marginRight: 10,
-    marginLeft: 8,
-  },
-
-  col1: {
-    backgroundColor: 'transparent',
-    borderRightWidth: 1,
-    flexDirection: 'row',
-    borderColor: 'black',
-    alignItems: 'center',
-    paddingRight: 8,
-    marginLeft: 10,
-    width: '45%',
-  },
-
-  col2: {
-    backgroundColor: 'transparent',
-    paddingLeft: 10,
-    width: '50%',
-  },
-
-  textLabelBody: {
-    position: 'relative',
-    fontSize: 20,
-    left: 10,
-  },
-  textLabelBody2: {
-    position: 'relative',
-    fontSize: 20,
+  vaccineProgress: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1A2E35',
   },
 });

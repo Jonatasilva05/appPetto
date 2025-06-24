@@ -7,6 +7,8 @@ import 'react-native-reanimated';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Platform } from 'react-native';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,38 +27,44 @@ const AppTheme: Theme = {
 };
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  return (
+    <AuthProvider>
+      <Layout />
+    </AuthProvider>
+  );
+}
+
+function Layout() {
+  const [fontsLoaded, fontError] = useFonts({
     ...FontAwesome.font,
   });
 
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+  const { isLoading: isAuthLoading } = useAuth();
 
   useEffect(() => {
-    if (loaded) {
+    if (fontError) throw fontError;
+  }, [fontError]);
+
+  useEffect(() => {
+    if (fontsLoaded && !isAuthLoading) {
       SplashScreen.hideAsync();
       
       if (Platform.OS === 'android') {
         NavigationBar.setVisibilityAsync("hidden");
-        // A linha abaixo foi removida para evitar o WARN
-        // NavigationBar.setBehaviorAsync('overlay-swipe'); 
       }
     }
-  }, [loaded]);
+  }, [fontsLoaded, isAuthLoading]);
 
-  if (!loaded) {
+  if (!fontsLoaded || isAuthLoading) {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
   return (
     <ThemeProvider value={AppTheme}>
       <Stack>
+        {/* Adicionei a tela de cadastro aqui para uma navegação mais robusta */}
         <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="funLogin/cadastro" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> 
       </Stack>
     </ThemeProvider>

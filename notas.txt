@@ -111,11 +111,15 @@ app
  |     |->config.tsx
  |     |->contato.tsx
  |     |->index.tsx
- |     |->login.tsx
  |     |->vacinacao.tsx
+ |
+ |->funLogin
+ |      |->cadastro.tsx
+ |
+ |
+ |
  |
  |->_layout.tsx
  |->+html.tsx
  |->+not-found.tsx
- |->conta.tsx
- |->modal.tsx
+ |->login.tsx

@@ -86,7 +86,7 @@ export default function TabLayout() {
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center', zIndex: 1 }}
               >
                 {IconComponent && <IconComponent focused={isFocused} color={color} size={30} />}
-                {/* *** CORREÇÃO APLICADA AQUI *** */}
+
                 <Text style={{ color, fontSize: 12, marginTop: 4 }}>{label}</Text>
               </Pressable>
             );
