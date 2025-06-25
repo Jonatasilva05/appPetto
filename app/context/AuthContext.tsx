@@ -3,12 +3,19 @@ import { useRouter, useSegments } from 'expo-router';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-// IMPORTANTE: Substitua '<SEU_IP_LOCAL>' pelo IP da máquina onde a API está rodando.
-// Para descobrir seu IP no Windows, use `ipconfig` no cmd. No Mac/Linux, use `ifconfig`.
-// Certifique-se de que o celular e o computador estão na mesma rede Wi-Fi.
-const API_URL = 'http://192.168.1.17:3000/api'; 
+// ===================================================================================
+//  ✅ PASSO IMPORTANTE:
+//  1. Inicie a API com `node api.js`.
+//  2. O terminal da API vai mostrar o endereço IP correto (ex: http://192.168.1.5:3000).
+//  3. Copie ESSE endereço e cole na variável API_BASE_URL abaixo.
+// ===================================================================================
+const API_BASE_URL = 'http://192.168.1.17:3000'; // Ex: 'http://192.168.1.5:3000'
+
+// Não altere as linhas abaixo
+const API_URL = `${API_BASE_URL}/api`; 
 const TOKEN_KEY = 'auth-token-petto';
 
+// --- Interfaces e Contexto ---
 interface AuthContextType {
   signIn: (token: string) => void;
   signOut: () => void;
@@ -18,7 +25,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Hook para usar o contexto facilmente em outras partes do app
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
@@ -27,7 +33,7 @@ export function useAuth() {
   return context;
 }
 
-// Componente que protege as rotas
+// --- Lógica do Provider ---
 function useProtectedRoute(session: string | null) {
   const segments = useSegments();
   const router = useRouter();
@@ -35,13 +41,13 @@ function useProtectedRoute(session: string | null) {
   useEffect(() => {
     const inAuthGroup = segments[0] === '(tabs)';
 
+    // Se não há sessão e o usuário tenta aceder a uma rota protegida
     if (!session && inAuthGroup) {
-      // Redireciona para a tela de login se o usuário não estiver logado
-      // e estiver tentando acessar uma rota protegida.
       router.replace('/login');
-    } else if (session && !inAuthGroup) {
-      // Redireciona para a tela principal (tabs) se o usuário
-      // estiver logado e acessar a tela de login.
+    } 
+    // **CORREÇÃO APLICADA AQUI**
+    // Se há sessão e o usuário tenta aceder a uma rota de autenticação (como /login)
+    else if (session && !inAuthGroup) {
       router.replace('/(tabs)');
     }
   }, [session, segments, router]);
@@ -52,7 +58,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Ao carregar o app, verifica se existe um token salvo
     const loadToken = async () => {
       try {
         const token = await SecureStore.getItemAsync(TOKEN_KEY);
@@ -93,5 +98,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Exporta a URL da API para ser usada nas telas de login/cadastro
+// Exporta a URL completa da API
 export { API_URL };
