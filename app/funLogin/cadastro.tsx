@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
+// Verifique se o caminho para o seu AuthContext está correto
 import { API_URL } from '../context/AuthContext';
 
 const backgroundImage = require("@/assets/imagess/images/cenario-cachorro.jpg");
@@ -11,11 +12,6 @@ export default function Cadastro() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  // Estados relacionados ao pet foram removidos
-  // const [nomePet, setNomePet] = useState('');
-  // const [raca, setRaca] = useState('');
-  
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +22,6 @@ export default function Cadastro() {
     setLoading(true);
     setError('');
 
-    // Validação simples no frontend
     if (!nome || !email || !password) {
       setError('Por favor, preencha todos os campos.');
       setLoading(false);
@@ -34,8 +29,8 @@ export default function Cadastro() {
     }
 
     try {
-      // Envia apenas os dados do usuário para a API
-      await axios.post(`${API_URL}/cadastro`, {
+      // CORREÇÃO: A URL agora inclui '/auth'
+      await axios.post(`${API_URL}/auth/cadastro`, {
         nome,
         email,
         senha: password,
@@ -43,15 +38,15 @@ export default function Cadastro() {
 
       Alert.alert(
         'Sucesso!', 
-        'Seu cadastro foi realizado. Agora você pode fazer o login.',
+        'O seu registo foi realizado. Agora pode fazer o login.',
         [{ text: 'OK', onPress: () => router.push('/login') }]
       );
 
     } catch (err: any) {
       if (err.response) {
-        setError(err.response.data.message || 'Ocorreu um erro ao se cadastrar.');
+        setError(err.response.data.message || 'Ocorreu um erro ao registar.');
       } else if (err.request) {
-        setError('Não foi possível conectar ao servidor. Verifique o IP e a conexão.');
+        setError('Não foi possível conectar ao servidor. Verifique a API.');
       } else {
         setError('Um erro inesperado ocorreu.');
       }
@@ -73,16 +68,12 @@ export default function Cadastro() {
             </View>
 
             <View style={styles.content}>
-              <Text style={styles.loginTitle}> Crie sua conta </Text>
-
+              <Text style={styles.loginTitle}> Crie a sua conta </Text>
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
               <Text style={styles.inputLabel}> Nome Completo </Text>
-              <TextInput style={styles.input} placeholder="Seu nome" placeholderTextColor="#ccc" value={nome} onChangeText={setNome}/>
-
+              <TextInput style={styles.input} placeholder="O seu nome" placeholderTextColor="#ccc" value={nome} onChangeText={setNome}/>
               <Text style={styles.inputLabel}> Email </Text>
               <TextInput style={styles.input} placeholder="email@exemplo.com" placeholderTextColor="#ccc" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
-
               <Text style={styles.inputLabel}> Senha </Text>
               <View style={styles.passwordContainer}>
                 <TextInput style={styles.inputPassword} placeholder="Crie uma senha segura" placeholderTextColor="#ccc" value={password} onChangeText={setPassword} secureTextEntry={!mostrarSenha}/>
@@ -90,13 +81,9 @@ export default function Cadastro() {
                   <Ionicons name={mostrarSenha ? 'eye-off' : 'eye'} size={24} color="#fff" />
                 </TouchableOpacity>
               </View>
-
-              {/* Campos do Pet foram removidos */}
-
               <TouchableOpacity style={styles.button} onPress={handleCadastro} disabled={loading}>
-                <Text style={styles.buttonText}>{loading ? 'Cadastrando...' : 'Criar Conta'}</Text>
+                <Text style={styles.buttonText}>{loading ? 'A registar...' : 'Criar Conta'}</Text>
               </TouchableOpacity>
-
               <View style={styles.signUpTextContainer}>
                 <Text style={styles.signUpText}>
                   Já tem uma conta?{' '}
@@ -111,7 +98,7 @@ export default function Cadastro() {
   );
 }
 
-// Os estilos (styles) permanecem os mesmos da versão anterior.
+// Estilos (sem alterações)
 const styles = StyleSheet.create({
   background: { flex: 1 },
   overlay: { backgroundColor: 'rgba(0,0,0,0.6)', flex: 1 },

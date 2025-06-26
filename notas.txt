@@ -104,22 +104,27 @@ const styles = StyleSheet.create({
 
 
 
-
-app
- |->(tabs)
- |     |->_layout.tsx
- |     |->config.tsx
- |     |->contato.tsx
- |     |->index.tsx
- |     |->vacinacao.tsx
- |
- |->funLogin
- |      |->cadastro.tsx
- |
- |
- |
- |
- |->_layout.tsx
- |->+html.tsx
- |->+not-found.tsx
- |->login.tsx
+appPetto
+|->app
+|  |->(tabs)
+|   |     |->_layout.tsx
+|   |     |->config.tsx
+|   |     |->contato.tsx
+|   |     |->index.tsx
+|   |     |->vacinacao.tsx
+|   |
+|   |->funLogin
+|   |      |->cadastro.tsx
+|   |      |->cadastrarPet.tsx
+|   |
+|   |->context
+|   |      |>AuthContext.tsx
+|   |
+|   |->_layoutcopy.tsx
+|   |->+html.tsx
+|   |->+not-found.tsx
+|   |->login.tsx
+|
+|
+|->api
+|   |->api.js

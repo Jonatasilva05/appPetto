@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
+// Verifique se o caminho para o seu AuthContext está correto
 import { useAuth, API_URL } from '@/app/context/AuthContext';
 
 const backgroundImage = require("@/assets/imagess/images/fundo_login2.jpeg");
@@ -14,7 +15,7 @@ export default function LoginScreen() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { signIn } = useAuth(); // Use a função signIn do contexto
+  const { signIn } = useAuth();
 
   const handleLogin = async () => {
     if (loading) return;
@@ -22,20 +23,20 @@ export default function LoginScreen() {
     setError('');
 
     try {
-      const response = await axios.post(`${API_URL}/login`, {
+      // CORREÇÃO: A URL agora aponta para a rota de autenticação correta
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email: email,
         senha: password,
       });
-      // A API retorna o token, que passamos para a função signIn
       signIn(response.data.token);
-      // O redirecionamento será feito automaticamente pelo useProtectedRoute no AuthContext
+      // O redirecionamento é feito automaticamente pelo AuthContext
 
     } catch (err: any) {
        if (err.response) {
          setError(err.response.data.message || 'Ocorreu um erro ao tentar entrar.');
        } else if (err.request) {
-         setError('Não foi possível conectar ao servidor. Verifique o IP e a conexão.');
-         Alert.alert('Erro de Conexão', 'Certifique-se de que o IP no código está correto e que a API está rodando.');
+         setError('Não foi possível conectar ao servidor. Verifique a API.');
+         Alert.alert('Erro de Conexão', 'Certifique-se de que o IP no código está correto e que a API está a funcionar.');
        } else {
          setError('Um erro inesperado ocorreu.');
        }
@@ -70,11 +71,11 @@ export default function LoginScreen() {
           <View style={styles.quebra}></View>
 
           <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
-            <Text style={styles.buttonText}>{loading ? 'Entrando...' : 'Entrar'}</Text>
+            <Text style={styles.buttonText}>{loading ? 'Entrando... ' : 'Entrar'}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => router.push('/funLogin/cadastro')}>
-            <Text style={styles.signUpText}>Não tem uma conta? <Text style={styles.linkText}>Cadastre-se</Text></Text>
+            <Text style={styles.signUpText}>Não tem uma conta? <Text style={styles.linkText}>Registe-se</Text></Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </View>
@@ -82,6 +83,7 @@ export default function LoginScreen() {
   );
 }
 
+// Estilos (sem alterações)
 const styles = StyleSheet.create({
   background: { flex: 1 },
   overlay: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.75)', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 },
@@ -97,5 +99,5 @@ const styles = StyleSheet.create({
   buttonText: { color: '#fff', fontWeight: '600', fontSize: 35, fontFamily: 'Poppins' },
   signUpText: { color: '#ccc', fontSize: 20, fontFamily: 'Poppins', textAlign: 'center' },
   linkText: { color: '#395aff', fontWeight: 'bold', textDecorationLine: 'underline' },
-  errorText: { color: '#ff4d4d', textAlign: 'center', marginBottom: 10, fontSize: 16, fontWeight: 'bold' }
+  errorText: { color: '#ff4d4d', textAlign: 'center', marginVertical: 10, fontSize: 16, fontWeight: 'bold' }
 });

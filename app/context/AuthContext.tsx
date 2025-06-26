@@ -5,17 +5,15 @@ import * as SecureStore from 'expo-secure-store';
 
 // ===================================================================================
 //  ✅ PASSO IMPORTANTE:
-//  1. Inicie a API com `node api.js`.
-//  2. O terminal da API vai mostrar o endereço IP correto (ex: http://192.168.1.5:3000).
-//  3. Copie ESSE endereço e cole na variável API_BASE_URL abaixo.
+//  Verifique se este IP ainda é o correto para a sua rede!
 // ===================================================================================
-const API_BASE_URL = 'http://192.168.1.17:3000'; // Ex: 'http://192.168.1.5:3000'
+const API_BASE_URL = 'http://192.168.101:3000'; 
 
-// Não altere as linhas abaixo
-const API_URL = `${API_BASE_URL}/api`; 
+// A URL base da sua API
+export const API_URL = `${API_BASE_URL}/api`; 
 const TOKEN_KEY = 'auth-token-petto';
 
-// --- Interfaces e Contexto ---
+// --- Interfaces e Contexto (sem alterações) ---
 interface AuthContextType {
   signIn: (token: string) => void;
   signOut: () => void;
@@ -33,7 +31,7 @@ export function useAuth() {
   return context;
 }
 
-// --- Lógica do Provider ---
+// --- Lógica do Provider (sem alterações) ---
 function useProtectedRoute(session: string | null) {
   const segments = useSegments();
   const router = useRouter();
@@ -41,12 +39,9 @@ function useProtectedRoute(session: string | null) {
   useEffect(() => {
     const inAuthGroup = segments[0] === '(tabs)';
 
-    // Se não há sessão e o usuário tenta aceder a uma rota protegida
     if (!session && inAuthGroup) {
       router.replace('/login');
     } 
-    // **CORREÇÃO APLICADA AQUI**
-    // Se há sessão e o usuário tenta aceder a uma rota de autenticação (como /login)
     else if (session && !inAuthGroup) {
       router.replace('/(tabs)');
     }
@@ -55,7 +50,7 @@ function useProtectedRoute(session: string | null) {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] =  useState(true);
 
   useEffect(() => {
     const loadToken = async () => {
@@ -98,5 +93,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Exporta a URL completa da API
-export { API_URL };
+// CORREÇÃO: Adicionando a exportação padrão para o Expo Router.
+export default AuthProvider;
