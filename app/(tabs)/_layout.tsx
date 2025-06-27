@@ -11,7 +11,7 @@ import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const { width } = Dimensions.get('window');
-const TAB_COUNT = 4;
+const TAB_COUNT = 5;
 
 function CustomHeaderTitle({ title }: { title: string }) {
   return (

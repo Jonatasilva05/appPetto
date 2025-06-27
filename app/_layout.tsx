@@ -65,8 +65,6 @@ function Layout() {
         {/* Telas que não fazem parte das abas */}
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="funLogin/cadastro" options={{ headerShown: false }} />
-        
-        {/* CORREÇÃO APLICADA AQUI: Registrando a nova rota */}
         <Stack.Screen name="funLogin/cadastrarPet" options={{ headerShown: false }} />
 
         {/* Agrupamento de todas as telas com abas */}

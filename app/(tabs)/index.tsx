@@ -87,11 +87,11 @@ export default function PetListScreen() {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Image source={require('@/assets/imagess/images/cachorro.png')} style={styles.emptyImage} />
-            <Text style={styles.emptyTitle}>Nenhum pet por aqui</Text>
-            <Text style={styles.emptySubtitle}>Vamos registar o seu primeiro amigo?</Text>
+            <Text style={styles.emptyTitle}>Nenhum pet por aqui </Text>
+            <Text style={styles.emptySubtitle}>Vamos registar o seu primeiro amigo? </Text>
             {/* CORREÇÃO: Usando caminho absoluto para a rota */}
             <TouchableOpacity style={styles.emptyButton} onPress={() => router.push('/funLogin/cadastrarPet')}>
-              <Text style={styles.emptyButtonText}>Registar primeiro pet</Text>
+              <Text style={styles.emptyButtonText}>Registar primeiro pet </Text>
             </TouchableOpacity>
           </View>
         }

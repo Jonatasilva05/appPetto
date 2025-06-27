@@ -112,10 +112,10 @@ appPetto
 |   |     |->contato.tsx
 |   |     |->index.tsx
 |   |     |->vacinacao.tsx
+|   |     |->cadastrarPet.tsx
 |   |
 |   |->funLogin
 |   |      |->cadastro.tsx
-|   |      |->cadastrarPet.tsx
 |   |
 |   |->context
 |   |      |>AuthContext.tsx
@@ -125,6 +125,14 @@ appPetto
 |   |->+not-found.tsx
 |   |->login.tsx
 |
-|
+|-> data
+|     databasepets.ts
 |->api
 |   |->api.js
+|   |->config
+|         |->database.js
+|   |->middleware
+|         |->authenticateToken.js
+|   |->routes
+|         |->authRoutes.js
+|         |->petRoutes.js

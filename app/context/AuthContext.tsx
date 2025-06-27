@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 //  ✅ PASSO IMPORTANTE:
 //  Verifique se este IP ainda é o correto para a sua rede!
 // ===================================================================================
-const API_BASE_URL = 'http://192.168.101:3000'; 
+const API_BASE_URL = 'http://192.168.1.17:3000'; 
 
 // A URL base da sua API
 export const API_URL = `${API_BASE_URL}/api`; 
